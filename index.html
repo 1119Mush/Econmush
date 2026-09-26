@@ -19,6 +19,7 @@
   --supply:#3D7A6A;
   --gov:#6C63AC;
   --dwl:#C4453D;
+  --tss:#5B7B9A;
   --r-lg:16px; --r-md:12px; --r-sm:8px;
   --dur:200ms;
 }
@@ -91,7 +92,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .tog.on{color:var(--ink);border-color:var(--line-strong);background:#F4F4EF}
 .tog[data-key="cs"].on{color:var(--demand);border-color:rgba(224,122,95,.45);background:rgba(224,122,95,.09)}
 .tog[data-key="ps"].on{color:var(--supply);border-color:rgba(61,122,106,.45);background:rgba(61,122,106,.09)}
-.tog[data-key="tss"].on{color:var(--ink);border-color:var(--line-strong);background:#F1F1EC}
+.tog[data-key="tss"].on{color:var(--tss);border-color:rgba(91,123,154,.5);background:rgba(91,123,154,.1)}
 .tog[data-key="dwl"].on{color:var(--dwl);border-color:rgba(196,69,61,.45);background:rgba(196,69,61,.09)}
 .tog[data-key="tr"].on,.tog[data-key="subsidyCost"].on,.tog[data-key="incidence"].on{color:var(--gov);border-color:rgba(108,99,172,.45);background:rgba(108,99,172,.09)}
 .tog.ctrl-toggle{background:var(--ink);color:#fff;border-color:var(--ink);margin-left:auto}
@@ -208,7 +209,7 @@ input[type=range]:disabled{opacity:.35;pointer-events:none}
 .preset:hover{border-color:var(--line-strong);background:#F7F7F3}
 .preset:active{transform:scale(.98)}
 
-/* ---------- AI overlay ---------- */
+/* ---------- Practice overlay ---------- */
 .ai-overlay{
   position:fixed;inset:0;z-index:80;
   background:var(--paper);
@@ -266,13 +267,28 @@ input[type=range]:disabled{opacity:.35;pointer-events:none}
 .btn-primary:active{transform:scale(.985)}
 .btn-primary:disabled{opacity:.28;pointer-events:none}
 
+.diff-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11px;font-weight:600;letter-spacing:.04em;
+  padding:3px 9px;border-radius:999px;
+  text-transform:uppercase;
+}
+.diff-badge.easy{background:rgba(61,122,106,.13);color:var(--supply)}
+.diff-badge.medium{background:rgba(108,99,172,.13);color:var(--gov)}
+.diff-badge.hard{background:rgba(196,69,61,.13);color:var(--dwl)}
+
 .qcard{
   background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
   padding:20px;margin-bottom:16px;
 }
-.qcard .qmeta{font-size:11.5px;color:var(--muted);letter-spacing:.04em;margin-bottom:10px;text-transform:uppercase}
+.qcard .qmeta{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  font-size:11.5px;color:var(--muted);letter-spacing:.04em;margin-bottom:12px;
+  text-transform:uppercase;
+}
+.qcard .qmeta .dot-sep{opacity:.4}
 .qcard .qtext{font-size:14.5px;line-height:1.75;white-space:pre-wrap}
-.qcard .qtext .zh{display:block;font-size:13px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.qcard .qtext .zh{display:block;font-size:13px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
 
 textarea{
   width:100%;min-height:190px;resize:vertical;
@@ -296,9 +312,7 @@ textarea::placeholder{color:#C4C4BE}
 .rpt-head .ico{font-size:15px}
 .rpt-head .zh{font-size:11.5px;margin-left:4px}
 
-.score-ring{
-  display:flex;align-items:center;gap:16px;margin-bottom:22px;
-}
+.score-ring{display:flex;align-items:center;gap:16px;margin-bottom:22px}
 .ring{
   width:66px;height:66px;border-radius:50%;
   display:grid;place-items:center;
@@ -308,180 +322,63 @@ textarea::placeholder{color:#C4C4BE}
 .ring-cap b{display:block;color:var(--ink);font-size:15px;font-weight:600;margin-bottom:2px}
 .ring-cap .zh{display:block;font-size:11.5px;margin-top:2px}
 
-/* ---------- marking scheme ---------- */
 .marking-card{
   border:1px solid var(--line);
   border-radius:var(--r-md);
   padding:14px 15px;
   margin-bottom:10px;
   background:var(--paper);
-  transition:border-color 200ms ease-out;
 }
 .marking-card:last-child{margin-bottom:0}
 .marking-card.ok{border-left:3px solid var(--supply)}
 .marking-card.no{border-left:3px solid var(--dwl)}
 
 .marking-head{
-  display:flex;
-  gap:10px;
-  align-items:flex-start;
-  font-size:13.5px;
-  font-weight:500;
-  line-height:1.55;
-  margin-bottom:11px;
+  display:flex;gap:10px;align-items:flex-start;
+  font-size:13.5px;font-weight:500;line-height:1.55;margin-bottom:11px;
 }
 .marking-head .mark{
   flex:0 0 auto;
-  width:18px;height:18px;
-  border-radius:50%;
+  width:18px;height:18px;border-radius:50%;
   display:grid;place-items:center;
-  font-size:11px;font-weight:700;
-  margin-top:1px;
+  font-size:11px;font-weight:700;margin-top:1px;
 }
 .marking-card.ok .marking-head .mark{background:rgba(61,122,106,.14);color:var(--supply)}
 .marking-card.no .marking-head .mark{background:rgba(196,69,61,.14);color:var(--dwl)}
 .marking-head .zh{display:block;font-size:12px;margin-top:2px;font-weight:400}
 
-.marking-body{
-  padding-left:28px;
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
+.marking-body{padding-left:28px;display:flex;flex-direction:column;gap:8px}
 .marking-row{
-  display:grid;
-  grid-template-columns:76px 1fr;
-  gap:10px;
-  font-size:12.5px;
-  line-height:1.65;
+  display:grid;grid-template-columns:76px 1fr;gap:10px;
+  font-size:12.5px;line-height:1.65;
 }
-.marking-row .label{
-  color:var(--muted);
-  font-weight:500;
-}
-.marking-row .label .zh{display:block;font-size:10.5px;margin-top:0}
-.marking-row .value{
-  color:#3A3A35;
-}
+.marking-row .label{color:var(--muted);font-weight:500}
+.marking-row .label .zh{display:block;font-size:10.5px}
+.marking-row .value{color:#3A3A35}
 .marking-row .value.quote{
-  font-style:italic;
-  color:#6A6A64;
-  background:#F4F4EF;
-  padding:2px 7px;
-  border-radius:4px;
-  display:inline-block;
-  word-break:break-word;
+  font-style:italic;color:#6A6A64;background:#F4F4EF;
+  padding:2px 7px;border-radius:4px;display:inline-block;word-break:break-word;
 }
-.marking-row .value.empty{
-  color:#C4C4BE;
-  font-style:italic;
-}
-.marking-row.improve .value{
-  color:var(--gov);
-}
-
-/* ---------- api key modal ---------- */
-.modal{
-  position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.96);
-  z-index:95;width:calc(100% - 36px);max-width:460px;
-  max-height:88vh;overflow-y:auto;
-  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
-  padding:22px;opacity:0;pointer-events:none;
-  transition:opacity 200ms ease-out,transform 200ms ease-out;
-}
-.modal.open{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
-.modal .m-title{font-weight:600;font-size:16px;margin-bottom:4px}
-.modal .m-title .zh{font-size:12px;margin-left:6px;color:var(--muted);font-weight:400}
-.modal .m-desc{font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:18px}
-
-.provider-list{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
-.provider-opt{
-  text-align:left;
-  padding:12px 14px;
-  border-radius:var(--r-md);
-  border:1px solid var(--line);
-  background:var(--surface);
-  transition:all var(--dur) ease-out;
-}
-.provider-opt.on{border-color:var(--ink);background:#F7F7F3}
-.provider-opt .p-name{
-  font-size:13.5px;font-weight:600;
-  display:flex;align-items:center;gap:8px;
-  margin-bottom:3px;
-}
-.provider-opt .p-tag{
-  font-size:10px;font-weight:600;letter-spacing:.04em;
-  padding:2px 7px;border-radius:999px;
-}
-.provider-opt .p-tag.free{background:rgba(61,122,106,.14);color:var(--supply)}
-.provider-opt .p-tag.paid{background:rgba(154,154,148,.16);color:var(--muted)}
-.provider-opt .p-desc{
-  font-size:11.5px;color:var(--muted);line-height:1.5;
-}
-.provider-opt .p-desc .zh{display:block;font-size:10.5px;margin-top:1px}
-
-.key-input{
-  width:100%;padding:12px 14px;border-radius:var(--r-sm);
-  border:1px solid var(--line);background:var(--paper);color:var(--ink);
-  font-family:'Inter',monospace;font-size:13px;outline:none;
-  margin-bottom:10px;
-  transition:border-color var(--dur) ease-out;
-}
-.key-input:focus{border-color:var(--line-strong)}
-
-.key-help{
-  font-size:11.5px;color:var(--muted);line-height:1.6;
-  margin-bottom:16px;
-  padding:10px 12px;
-  background:#F7F7F3;
-  border-radius:var(--r-sm);
-}
-.key-help a{color:var(--gov);text-decoration:none;font-weight:500}
-.key-help a:hover{text-decoration:underline}
-
-.ai-pill{
-  font-size:11px;font-weight:600;letter-spacing:.03em;
-  padding:3px 9px;border-radius:999px;
-  transition:all var(--dur) ease-out;
-  display:inline-flex;align-items:center;gap:5px;
-}
-.ai-pill.live{background:rgba(61,122,106,.12);color:var(--supply)}
-.ai-pill.local{background:rgba(154,154,148,.14);color:var(--muted)}
-.ai-pill.err{background:rgba(196,69,61,.12);color:var(--dwl)}
-.ai-pill .led{width:6px;height:6px;border-radius:50%;background:currentColor}
-.ai-pill.live .led{animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-
-.loading-dots{display:inline-flex;gap:3px;align-items:center}
-.loading-dots i{
-  width:4px;height:4px;border-radius:50%;background:currentColor;
-  animation:blink 1.2s infinite;
-}
-.loading-dots i:nth-child(2){animation-delay:.2s}
-.loading-dots i:nth-child(3){animation-delay:.4s}
-@keyframes blink{0%,60%,100%{opacity:.25}30%{opacity:1}}
+.marking-row .value.empty{color:#C4C4BE;font-style:italic}
 
 .history-note{
   display:flex;align-items:center;gap:8px;
   font-size:12px;color:var(--muted);
-  padding:8px 12px;border-radius:var(--r-sm);
+  padding:9px 12px;border-radius:var(--r-sm);
   background:#F7F7F3;margin-bottom:16px;
   line-height:1.5;
 }
+.history-note .zh{display:block;font-size:11px;margin-top:1px}
 
 @media (min-width:960px){
-  .workspace{
-    flex-direction:row;align-items:flex-start;gap:20px;
-    padding:0 24px 60px;
-  }
+  .workspace{flex-direction:row;align-items:flex-start;gap:20px;padding:0 24px 60px}
   .chart-col{flex:1}
   .panel-col{
-    position:sticky;top:74px;
-    transform:none;max-height:calc(100vh - 96px);
+    position:sticky;top:74px;transform:none;
+    max-height:calc(100vh - 96px);
     width:340px;flex:0 0 340px;
     border:1px solid var(--line);border-radius:var(--r-lg);
-    padding:22px;box-shadow:none;
-    overflow-y:auto;
+    padding:22px;overflow-y:auto;
   }
   .sheet-handle{display:none}
   .sheet-backdrop{display:none!important}
@@ -500,7 +397,7 @@ textarea::placeholder{color:#C4C4BE}
   <div class="brand"><span class="dot"></span>EconMush</div>
   <div class="top-actions">
     <button class="btn-ghost" id="resetBtn">Reset <span class="zh">重設</span></button>
-    <button class="btn-ai" id="aiBtn">AI Practice</button>
+    <button class="btn-ai" id="aiBtn">Practice</button>
   </div>
 </header>
 
@@ -520,12 +417,12 @@ textarea::placeholder{color:#C4C4BE}
     <div class="group">
       <div class="group-title">Market<span class="zh">市場</span></div>
       <label class="ctrl">
-        <div class="ctrl-head"><span class="name">Price Elasticity of Demand<span class="zh">需求彈性 PED</span></span><span class="val" id="pedVal">—</span></div>
-        <input type="range" id="pedRange" min="0" max="100" value="33">
+        <div class="ctrl-head"><span class="name">PED<span class="zh">需求彈性</span></span><span class="val" id="pedVal">—</span></div>
+        <input type="range" id="pedRange" min="0" max="100" value="50">
       </label>
       <label class="ctrl">
-        <div class="ctrl-head"><span class="name">Price Elasticity of Supply<span class="zh">供給彈性 PES</span></span><span class="val" id="pesVal">—</span></div>
-        <input type="range" id="pesRange" min="0" max="100" value="33">
+        <div class="ctrl-head"><span class="name">PES<span class="zh">供給彈性</span></span><span class="val" id="pesVal">—</span></div>
+        <input type="range" id="pesRange" min="0" max="100" value="50">
       </label>
     </div>
 
@@ -577,14 +474,13 @@ textarea::placeholder{color:#C4C4BE}
 
 <div class="sheet-backdrop" id="backdrop"></div>
 
-<!-- ===================== AI OVERLAY ===================== -->
+<!-- ===================== PRACTICE OVERLAY (LOCAL ONLY) ===================== -->
 <div class="ai-overlay" id="aiOverlay">
   <div class="ai-head">
     <button class="icon-btn" id="aiClose">←</button>
-    <span class="ttl">AI Practice<span class="zh">AI 練習</span></span>
+    <span class="ttl">Practice<span class="zh">本地練習</span></span>
     <span style="margin-left:auto;display:flex;align-items:center;gap:8px">
-      <span class="ai-pill local" id="aiPill"><span class="led"></span><span id="aiPillText">Local Mode</span></span>
-      <button class="icon-btn" id="apiKeyBtn" title="AI Settings" style="width:28px;height:28px;font-size:14px">⚙</button>
+      <span class="diff-badge medium" id="diffBadge">Medium</span>
     </span>
   </div>
   <div class="ai-body">
@@ -638,30 +534,12 @@ textarea::placeholder{color:#C4C4BE}
   </div>
 </div>
 
-<!-- ===================== API KEY MODAL ===================== -->
-<div class="sheet-backdrop" id="keyBackdrop"></div>
-<div class="modal" id="keyModal">
-  <div class="m-title">AI Settings<span class="zh">AI 設定</span></div>
-  <div class="m-desc">Choose a provider and paste your API key. The key stays in your browser's localStorage only.</div>
-
-  <div class="provider-list" id="providerList"></div>
-
-  <input type="password" class="key-input" id="apiKeyInput" placeholder="API Key">
-
-  <div class="key-help" id="keyHelp"></div>
-
-  <div style="display:flex;gap:8px">
-    <button class="btn-primary" id="saveKeyBtn" style="flex:1">Save<span class="zh">儲存</span></button>
-    <button class="btn-primary" id="clearKeyBtn" style="flex:0 0 auto;width:auto;padding:14px 18px;background:#F1F1EC;color:var(--muted)">Clear</button>
-  </div>
-</div>
-
 <script>
 /* =========================================================
-   EconMush v2 — Bilingual (EN primary, ZH secondary)
+   EconMush v3 — Local practice + robust elasticity + TSS fix
    ========================================================= */
 
-/* ---------- constants / coordinates ---------- */
+/* ---------- constants ---------- */
 const QMAX = 100, PMAX = 100;
 const VW = 600, VH = 500;
 const PAD = { l: 56, r: 36, t: 28, b: 44 };
@@ -699,19 +577,19 @@ const state = {
 function mkLine(a, b) {
   let dq = b.q - a.q;
   const dp = b.p - a.p;
-  if (Math.abs(dq) < 1e-6) dq = 1e-6;
+  if (Math.abs(dq) < 1e-9) dq = 1e-9;
   const m = dp / dq;
   const c = a.p - m * a.q;
   return {
     m, c,
     at: q => m * q + c,
-    inv: p => Math.abs(m) < 1e-9 ? Infinity : (p - c) / m
+    inv: p => Math.abs(m) < 1e-12 ? Infinity : (p - c) / m
   };
 }
 
 function intersect(L1, L2) {
   const dm = L1.m - L2.m;
-  if (Math.abs(dm) < 1e-9) return null;
+  if (Math.abs(dm) < 1e-12) return null;
   const q = (L2.c - L1.c) / dm;
   return { q, p: L1.at(q) };
 }
@@ -723,7 +601,7 @@ function visSeg(m, c) {
   };
   put(0, c);
   put(100, 100 * m + c);
-  if (Math.abs(m) > 1e-9) {
+  if (Math.abs(m) > 1e-12) {
     put(-c / m, 0);
     put((100 - c) / m, 100);
   }
@@ -754,7 +632,7 @@ function compute() {
     worldP: null, worldQd: null, worldQs: null, trade: null
   };
 
-  if (!base) return R;
+  if (!base || !isFinite(base.q) || !isFinite(base.p)) return R;
   const q0 = base.q, p0 = base.p;
 
   const areaD = Q => (D.at(0) + D.at(Q)) / 2 * Q;
@@ -827,8 +705,8 @@ function compute() {
       R.taxUnit = t; R.taxTotal = Pc - Pp;
       R.cs = (D.at(0) - Pc) * Q / 2;
       R.ps = (Pp - S.at(0)) * Q / 2;
-      R.tss = R.cs + R.ps;
       R.tr = t * Q;
+      R.tss = R.cs + R.ps + R.tr;   // TSS includes tax revenue
       R.dwl = 0.5 * t * Math.abs(q0 - Q);
       const wedge = Pc - Pp;
       R.consumerShare = wedge > 0 ? (Pc - p0) / wedge : 0;
@@ -848,8 +726,8 @@ function compute() {
       R.taxUnit = Pc - Pp; R.taxTotal = Pc - Pp;
       R.cs = (D.at(0) - Pc) * Q / 2;
       R.ps = (Pp - S.at(0)) * Q / 2;
-      R.tss = R.cs + R.ps;
       R.tr = (Pc - Pp) * Q;
+      R.tss = R.cs + R.ps + R.tr;
       R.dwl = 0.5 * (Pc - Pp) * Math.abs(q0 - Q);
       const wedge = Pc - Pp;
       R.consumerShare = wedge > 0 ? (Pc - p0) / wedge : 0;
@@ -869,8 +747,8 @@ function compute() {
       R.taxUnit = Pp - Pc;
       R.cs = (D.at(0) - Pc) * Q / 2;
       R.ps = (Pp - S.at(0)) * Q / 2;
-      R.tss = R.cs + R.ps;
       R.subsidyCost = s * Q;
+      R.tss = R.cs + R.ps - R.subsidyCost;  // TSS subtracts subsidy cost
       R.dwl = 0.5 * s * Math.abs(Q - q0);
       return R;
     }
@@ -901,6 +779,10 @@ function defsStr() {
       <rect width="8" height="8" fill="#3D7A6A" opacity="0.10"/>
       <line x1="0" y1="0" x2="0" y2="8" stroke="#3D7A6A" stroke-width="1.3" opacity="0.42"/>
     </pattern>
+    <pattern id="patTSS" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="8" height="8" fill="#5B7B9A" opacity="0.12"/>
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#5B7B9A" stroke-width="1.3" opacity="0.45"/>
+    </pattern>
     <pattern id="patTR" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
       <rect width="8" height="8" fill="#6C63AC" opacity="0.13"/>
       <line x1="0" y1="0" x2="0" y2="8" stroke="#6C63AC" stroke-width="1.3" opacity="0.42"/>
@@ -913,6 +795,17 @@ function defsStr() {
       <rect x="${PAD.l}" y="${PAD.t}" width="${PW}" height="${PH}"/>
     </clipPath>
   </defs>`;
+}
+
+/* clamp area vertices so extreme elasticity doesn't blow up rendering */
+function areaTop(D, Q) {
+  // price at Q=0, capped to chart range so triangles stay visible
+  const v = D.at(0);
+  return clamp(isFinite(v) ? v : 100, 0, 100);
+}
+function areaBot(S, Q) {
+  const v = S.at(0);
+  return clamp(isFinite(v) ? v : 0, 0, 100);
 }
 
 function render() {
@@ -935,6 +828,7 @@ function render() {
   g.push(`<text x="${px(100)}" y="${py(0) + 34}" text-anchor="end" font-size="11" fill="#9A9A94" font-family="Inter,sans-serif">Quantity Q</text>`);
   g.push(`<text x="${px(0) - 10}" y="${py(100) - 12}" text-anchor="end" font-size="11" fill="#9A9A94" font-family="Inter,sans-serif">Price P</text>`);
 
+  /* price line */
   if (R.priceLine !== null && R.priceLine !== undefined && state.priceCtrl.mode !== 'none') {
     const y = Y(R.priceLine);
     g.push(`<line x1="${X(0)}" y1="${y}" x2="${X(100)}" y2="${y}" stroke="#6C63AC" stroke-width="1.6" stroke-dasharray="6 4" stroke-linecap="round" clip-path="url(#plotClip)"/>`);
@@ -950,23 +844,40 @@ function render() {
     g.push(`<text x="${px(100) - 4}" y="${py(R.worldP) - 7}" text-anchor="end" font-size="11" font-weight="600" fill="#6C63AC" font-family="Inter,sans-serif">World Price Pw</text>`);
   }
 
-  const needCS = s.cs || s.tss;
-  const needPS = s.ps || s.tss;
+  /* Areas */
   const Q = R.Q, Pc = R.Pc, Pp = R.Pp;
 
-  if (Q !== null && Q > 0) {
-    if (needCS) g.push(`<polygon points="${polyStr([[0, R.D.at(0)], [Q, Pc], [0, Pc]])}" fill="url(#patCS)" clip-path="url(#plotClip)"/>`);
-    if (needPS) g.push(`<polygon points="${polyStr([[0, R.S.at(0)], [Q, Pp], [0, Pp]])}" fill="url(#patPS)" clip-path="url(#plotClip)"/>`);
-    if ((s.tr && R.tr > 0) || (s.subsidyCost && R.subsidyCost > 0))
-      g.push(`<polygon points="${polyStr([[0, Pc], [Q, Pc], [Q, Pp], [0, Pp]])}" fill="url(#patTR)" clip-path="url(#plotClip)"/>`);
-    if (s.dwl && R.dwl > 0 && R.base && Q !== R.base.q)
-      g.push(`<polygon points="${polyStr([[Q, R.D.at(Q)], [R.base.q, R.base.p], [Q, R.S.at(Q)]])}" fill="url(#patDWL)" clip-path="url(#plotClip)"/>`);
+  if (Q !== null && Q > 0 && Q <= 100) {
+    // CS color: prefer orange when CS toggled alone; else TSS-blue when TSS on
+    const csFill = s.cs ? 'url(#patCS)' : (s.tss ? 'url(#patTSS)' : null);
+    const psFill = s.ps ? 'url(#patPS)' : (s.tss ? 'url(#patTSS)' : null);
+
+    if (csFill) {
+      const topP = areaTop(R.D, Q);
+      const tri = [[0, topP], [Q, Pc], [0, Pc]];
+      g.push(`<polygon points="${polyStr(tri)}" fill="${csFill}" clip-path="url(#plotClip)"/>`);
+    }
+    if (psFill) {
+      const botP = areaBot(R.S, Q);
+      const tri = [[0, botP], [Q, Pp], [0, Pp]];
+      g.push(`<polygon points="${polyStr(tri)}" fill="${psFill}" clip-path="url(#plotClip)"/>`);
+    }
+    if ((s.tr && R.tr > 0) || (s.subsidyCost && R.subsidyCost > 0)) {
+      const rect = [[0, Pc], [Q, Pc], [Q, Pp], [0, Pp]];
+      g.push(`<polygon points="${polyStr(rect)}" fill="url(#patTR)" clip-path="url(#plotClip)"/>`);
+    }
+    if (s.dwl && R.dwl > 0 && R.base && Q !== R.base.q) {
+      const tri = [[Q, R.D.at(Q)], [R.base.q, R.base.p], [Q, R.S.at(Q)]];
+      g.push(`<polygon points="${polyStr(tri)}" fill="url(#patDWL)" clip-path="url(#plotClip)"/>`);
+    }
     if (R.mode === 'world' && R.worldP !== null && R.tradeType === 'import') {
       const qd = R.worldQd, qs = R.worldQs;
-      g.push(`<polygon points="${polyStr([[qs, R.worldP], [qd, R.worldP], [qd, R.D.at(qd)], [qs, R.S.at(qs)]])}" fill="url(#patTR)" opacity="0.7" clip-path="url(#plotClip)"/>`);
+      const rect = [[qs, R.worldP], [qd, R.worldP], [qd, R.D.at(qd)], [qs, R.S.at(qs)]];
+      g.push(`<polygon points="${polyStr(rect)}" fill="url(#patTR)" opacity="0.7" clip-path="url(#plotClip)"/>`);
     }
   }
 
+  /* tax wedge */
   if ((R.mode === 'tax' || R.mode === 'advalorem') && Q !== null) {
     g.push(`<line x1="${X(Q)}" y1="${Y(Pc)}" x2="${X(Q)}" y2="${Y(Pp)}" stroke="#6C63AC" stroke-width="1.8" stroke-linecap="round" clip-path="url(#plotClip)"/>`);
     g.push(`<line x1="${X(0)}" y1="${Y(Pc)}" x2="${X(Q)}" y2="${Y(Pc)}" stroke="#9A9A94" stroke-width="1" stroke-dasharray="3 3" clip-path="url(#plotClip)"/>`);
@@ -976,19 +887,25 @@ function render() {
       g.push(`<text x="${px(Q) - 8}" y="${py(midP) + 4}" text-anchor="end" font-size="11" font-weight="600" fill="#6C63AC" font-family="Inter,sans-serif">Tax Wedge ${(Pc - Pp).toFixed(1)}</text>`);
   }
 
+  /* curves */
   const dSeg = visSeg(R.D.m, R.D.c);
   const sSeg = visSeg(R.S.m, R.S.c);
   if (dSeg) {
     g.push(`<line x1="${X(dSeg[0].q)}" y1="${Y(dSeg[0].p)}" x2="${X(dSeg[1].q)}" y2="${Y(dSeg[1].p)}" stroke="#E07A5F" stroke-width="2" stroke-linecap="round" clip-path="url(#plotClip)"/>`);
     const end = dSeg[dSeg.length - 1];
-    g.push(`<text x="${px(end.q) + (end.q > 80 ? -14 : 10)}" y="${py(end.p) + (end.q > 80 ? 16 : -8)}" font-size="14" font-weight="600" fill="#E07A5F" font-family="Inter,sans-serif">D</text>`);
+    const labelQ = clamp(end.q, 2, 98);
+    const labelP = clamp(end.p, 3, 97);
+    g.push(`<text x="${X(labelQ) + (labelQ > 80 ? -14 : 10)}" y="${Y(labelP) + (labelQ > 80 ? 16 : -8)}" font-size="14" font-weight="600" fill="#E07A5F" font-family="Inter,sans-serif">D</text>`);
   }
   if (sSeg) {
     g.push(`<line x1="${X(sSeg[0].q)}" y1="${Y(sSeg[0].p)}" x2="${X(sSeg[1].q)}" y2="${Y(sSeg[1].p)}" stroke="#3D7A6A" stroke-width="2" stroke-linecap="round" clip-path="url(#plotClip)"/>`);
     const end = sSeg[sSeg.length - 1];
-    g.push(`<text x="${px(end.q) + (end.q > 80 ? -14 : 10)}" y="${py(end.p) + (end.q > 80 ? 16 : -8)}" font-size="14" font-weight="600" fill="#3D7A6A" font-family="Inter,sans-serif">S</text>`);
+    const labelQ = clamp(end.q, 2, 98);
+    const labelP = clamp(end.p, 3, 97);
+    g.push(`<text x="${X(labelQ) + (labelQ > 80 ? -14 : 10)}" y="${Y(labelP) + (labelQ > 80 ? 16 : -8)}" font-size="14" font-weight="600" fill="#3D7A6A" font-family="Inter,sans-serif">S</text>`);
   }
 
+  /* shifted curves */
   if (R.mode === 'tax' && state.tax > 0) {
     const seg = visSeg(R.S.m, R.S.c + state.tax);
     if (seg) g.push(`<line x1="${X(seg[0].q)}" y1="${Y(seg[0].p)}" x2="${X(seg[1].q)}" y2="${Y(seg[1].p)}" stroke="#6C63AC" stroke-width="1.6" stroke-dasharray="5 4" stroke-linecap="round" clip-path="url(#plotClip)"/>`);
@@ -1003,11 +920,13 @@ function render() {
     if (seg) g.push(`<line x1="${X(seg[0].q)}" y1="${Y(seg[0].p)}" x2="${X(seg[1].q)}" y2="${Y(seg[1].p)}" stroke="#6C63AC" stroke-width="1.6" stroke-dasharray="5 4" stroke-linecap="round" clip-path="url(#plotClip)"/>`);
   }
 
+  /* original equilibrium ghost */
   if (R.base && R.base.q >= 0 && R.base.q <= 100 && R.base.p >= 0 && R.base.p <= 100
       && (state.tax > 0 || state.advalorem > 0 || state.subsidy > 0 || state.priceCtrl.mode !== 'none' || state.quota > 0 || state.world > 0)) {
     g.push(`<circle cx="${X(R.base.q)}" cy="${Y(R.base.p)}" r="3.5" fill="none" stroke="#9A9A94" stroke-width="1.4" clip-path="url(#plotClip)"/>`);
   }
 
+  /* new equilibrium dot */
   if (Q !== null && Q > 0 && Q <= 100 && Pc >= 0 && Pc <= 100) {
     g.push(`<circle cx="${X(Q)}" cy="${Y(Pc)}" r="5.5" fill="#141414" clip-path="url(#plotClip)"/>`);
     g.push(`<circle cx="${X(Q)}" cy="${Y(Pc)}" r="9" fill="none" stroke="#141414" stroke-width="1" opacity="0.18" clip-path="url(#plotClip)"/>`);
@@ -1015,25 +934,33 @@ function render() {
       g.push(`<text x="${px(Q) + 12}" y="${py(Pc) - 10}" font-size="11.5" font-weight="500" fill="#141414" font-family="Inter,sans-serif">E (${Q.toFixed(0)}, ${Pc.toFixed(0)})</text>`);
   }
 
+  /* shortage / surplus / trade labels */
   if (R.mode === 'ceiling' && R.shortage > 0 && R.priceLine !== null) {
     const y = py(R.priceLine);
     const qs = R.S.inv(R.priceLine), qd = R.D.inv(R.priceLine);
-    g.push(`<line x1="${X(qs)}" y1="${y}" x2="${X(qd)}" y2="${y}" stroke="#C4453D" stroke-width="2.4" stroke-linecap="round" clip-path="url(#plotClip)"/>`);
-    g.push(`<text x="${px((qs + qd) / 2)}" y="${y + 18}" text-anchor="middle" font-size="11.5" font-weight="600" fill="#C4453D" font-family="Inter,sans-serif">Shortage ${R.shortage.toFixed(1)}</text>`);
+    if (isFinite(qs) && isFinite(qd)) {
+      g.push(`<line x1="${X(qs)}" y1="${y}" x2="${X(qd)}" y2="${y}" stroke="#C4453D" stroke-width="2.4" stroke-linecap="round" clip-path="url(#plotClip)"/>`);
+      g.push(`<text x="${px((qs + qd) / 2)}" y="${y + 18}" text-anchor="middle" font-size="11.5" font-weight="600" fill="#C4453D" font-family="Inter,sans-serif">Shortage ${R.shortage.toFixed(1)}</text>`);
+    }
   }
   if (R.mode === 'floor' && R.surplus > 0 && R.priceLine !== null) {
     const y = py(R.priceLine);
     const qd = R.D.inv(R.priceLine), qs = R.S.inv(R.priceLine);
-    g.push(`<line x1="${X(qd)}" y1="${y}" x2="${X(qs)}" y2="${y}" stroke="#C4453D" stroke-width="2.4" stroke-linecap="round" clip-path="url(#plotClip)"/>`);
-    g.push(`<text x="${px((qd + qs) / 2)}" y="${y - 12}" text-anchor="middle" font-size="11.5" font-weight="600" fill="#C4453D" font-family="Inter,sans-serif">Surplus ${R.surplus.toFixed(1)}</text>`);
+    if (isFinite(qd) && isFinite(qs)) {
+      g.push(`<line x1="${X(qd)}" y1="${y}" x2="${X(qs)}" y2="${y}" stroke="#C4453D" stroke-width="2.4" stroke-linecap="round" clip-path="url(#plotClip)"/>`);
+      g.push(`<text x="${px((qd + qs) / 2)}" y="${y - 12}" text-anchor="middle" font-size="11.5" font-weight="600" fill="#C4453D" font-family="Inter,sans-serif">Surplus ${R.surplus.toFixed(1)}</text>`);
+    }
   }
   if (R.mode === 'world' && R.trade) {
     const y = py(R.worldP);
     const a = R.worldQd, b = R.worldQs;
-    g.push(`<line x1="${X(Math.min(a, b))}" y1="${y}" x2="${X(Math.max(a, b))}" y2="${y}" stroke="#6C63AC" stroke-width="2.4" stroke-linecap="round" clip-path="url(#plotClip)"/>`);
-    g.push(`<text x="${px((a + b) / 2)}" y="${y + (R.tradeType === 'import' ? 18 : -12)}" text-anchor="middle" font-size="11.5" font-weight="600" fill="#6C63AC" font-family="Inter,sans-serif">${R.tradeType === 'import' ? 'Imports' : 'Exports'} ${R.trade.toFixed(1)}</text>`);
+    if (isFinite(a) && isFinite(b)) {
+      g.push(`<line x1="${X(Math.min(a, b))}" y1="${y}" x2="${X(Math.max(a, b))}" y2="${y}" stroke="#6C63AC" stroke-width="2.4" stroke-linecap="round" clip-path="url(#plotClip)"/>`);
+      g.push(`<text x="${px((a + b) / 2)}" y="${y + (R.tradeType === 'import' ? 18 : -12)}" text-anchor="middle" font-size="11.5" font-weight="600" fill="#6C63AC" font-family="Inter,sans-serif">${R.tradeType === 'import' ? 'Imports' : 'Exports'} ${R.trade.toFixed(1)}</text>`);
+    }
   }
 
+  /* drag handles */
   const dh = state.demand, sh = state.supply;
   const handles = [
     { q: dh.a.q, p: dh.a.p, cls: 'demand', h: 'a' },
@@ -1075,9 +1002,9 @@ function updateUI(R) {
       out.push(`<span class="ri">P* <span class="rv num">${fmt(R.Pc)}</span></span>`);
     }
   }
-  if (state.show.cs || state.show.tss) out.push(`<span class="ri">CS <span class="rv num" style="color:#E07A5F">${fmt(R.cs)}</span></span>`);
-  if (state.show.ps || state.show.tss) out.push(`<span class="ri">PS <span class="rv num" style="color:#3D7A6A">${fmt(R.ps)}</span></span>`);
-  if (state.show.tss) out.push(`<span class="ri">TSS <span class="rv num">${fmt(R.tss)}</span></span>`);
+  if (state.show.cs) out.push(`<span class="ri">CS <span class="rv num" style="color:#E07A5F">${fmt(R.cs)}</span></span>`);
+  if (state.show.ps) out.push(`<span class="ri">PS <span class="rv num" style="color:#3D7A6A">${fmt(R.ps)}</span></span>`);
+  if (state.show.tss) out.push(`<span class="ri">TSS <span class="rv num" style="color:#5B7B9A;font-weight:600">${fmt(R.tss)}</span></span>`);
   if (state.show.tr && R.tr > 0) out.push(`<span class="ri">Tax Rev. <span class="rv num" style="color:#6C63AC">${fmt(R.tr)}</span></span>`);
   if (state.show.subsidyCost && R.subsidyCost > 0) out.push(`<span class="ri">Subsidy Cost <span class="rv num" style="color:#6C63AC">${fmt(R.subsidyCost)}</span></span>`);
   if (state.show.dwl) out.push(`<span class="ri">DWL <span class="rv num" style="color:#C4453D">${fmt(R.dwl)}</span></span>`);
@@ -1088,13 +1015,13 @@ function updateUI(R) {
   document.getElementById('readout').innerHTML = out.join('');
 
   const hints = {
-    base: { en: 'Drag the D or S curve to shift the market; drag endpoints to change slope.', zh: '拖動 D 或 S 曲線平移；拖端點改斜率。' },
+    base: { en: 'Drag the D or S curve to shift; drag endpoints to change slope.', zh: '拖動 D 或 S 曲線平移；拖端點改斜率。' },
     tax: { en: 'Tax wedge = Pc − Pp. Q falls, DWL appears.', zh: '稅楔 = 消費者價 − 生產者價。Q 下降，出現 DWL。' },
-    advalorem: { en: 'Ad valorem tax rotates the S curve around the origin; tax amount varies with price.', zh: '從價稅令 S 曲線繞原點旋轉，稅額隨價格改變。' },
-    subsidy: { en: 'Subsidy shifts S down. Q rises; government cost > CS + PS gain → DWL.', zh: '補貼令 S 下移。Q 上升，政府支出 > 消費者 + 生產者得益，出現 DWL。' },
-    ceiling: { en: 'Price ceiling below equilibrium → shortage; actual quantity set by supply.', zh: '價格上限低於均衡 → 短缺，實際成交量由供給決定。' },
-    floor: { en: 'Price floor above equilibrium → surplus; actual quantity set by demand.', zh: '價格下限高於均衡 → 盈餘，實際成交量由需求決定。' },
-    quota: { en: 'Quota caps quantity; price determined by demand curve; DWL between quota and equilibrium.', zh: '配額限制數量，價格由需求曲線決定，DWL 為配額後到均衡之間。' },
+    advalorem: { en: 'Ad valorem tax rotates the S curve; tax amount varies with price.', zh: '從價稅令 S 曲線旋轉，稅額隨價格改變。' },
+    subsidy: { en: 'Subsidy shifts S down. Q rises; govt cost > CS + PS gain → DWL.', zh: '補貼令 S 下移。Q 上升，政府支出 > 消費者 + 生產者得益，出現 DWL。' },
+    ceiling: { en: 'Price ceiling below equilibrium → shortage.', zh: '價格上限低於均衡 → 短缺。' },
+    floor: { en: 'Price floor above equilibrium → surplus.', zh: '價格下限高於均衡 → 盈餘。' },
+    quota: { en: 'Quota caps quantity; price set by demand curve.', zh: '配額限制數量，價格由需求曲線決定。' },
     world: { en: 'World price below equilibrium → imports; above → exports.', zh: '世界價格低於均衡 → 進口；高於均衡 → 出口。' }
   };
   const h = hints[R.mode] || { en: '', zh: '' };
@@ -1118,18 +1045,36 @@ function updateUI(R) {
   document.getElementById('worldVal').textContent = state.world > 0 ? `Pw = ${state.world}` : 'Off';
   document.getElementById('worldVal').classList.toggle('on', state.world > 0);
 
-  const base = R.base;
-  if (base) {
-    const md = Math.abs(R.D.m), ms = Math.abs(R.S.m);
-    const pedVal = md < 1e-6 ? Infinity : (1 / md) * (base.p / base.q);
-    const pesVal = ms < 1e-6 ? Infinity : (1 / ms) * (base.p / base.q);
-    document.getElementById('pedVal').textContent = isFinite(pedVal) ? `≈ ${pedVal.toFixed(2)}` : '∞';
-    document.getElementById('pesVal').textContent = isFinite(pesVal) ? `≈ ${pesVal.toFixed(2)}` : '∞';
-  }
+  /* PED/PES display */
+  const ped = pedFromSlider(+document.getElementById('pedRange').value);
+  const pes = pesFromSlider(+document.getElementById('pesRange').value);
+  document.getElementById('pedVal').textContent = ped.label;
+  document.getElementById('pesVal').textContent = pes.label;
+}
+
+/* ---------- elasticity slider mapping ---------- */
+/* 0 = perfectly inelastic (vertical), 100 = perfectly elastic (horizontal), 50 = unit */
+function pedFromSlider(v) {
+  if (v >= 100) return { m: 0, label: '∞ (perfectly elastic)' };
+  if (v <= 0) return { m: -1e6, label: '0 (perfectly inelastic)' };
+  const logAbsM = 3 - 6 * (v / 100);   // 3 → -3
+  const absM = Math.pow(10, logAbsM);
+  const m = -absM;
+  // label with approx PED at mid-point (informational)
+  return { m, label: `slope ≈ ${m.toFixed(2)}` };
+}
+
+function pesFromSlider(v) {
+  if (v >= 100) return { m: 0, label: '∞ (perfectly elastic)' };
+  if (v <= 0) return { m: 1e6, label: '0 (perfectly inelastic)' };
+  const logAbsM = 3 - 6 * (v / 100);
+  const absM = Math.pow(10, logAbsM);
+  const m = absM;
+  return { m, label: `slope ≈ ${m.toFixed(2)}` };
 }
 
 /* =========================================================
-   drag interaction
+   drag
    ========================================================= */
 let drag = null;
 
@@ -1189,8 +1134,8 @@ function onDragMove(e) {
     const other = drag.handle === 'a' ? o.b : o.a;
     let q = clamp(pt.q, 0, 100);
     let p = clamp(pt.p, 0, 100);
-    if (Math.abs(q - other.q) < 6) {
-      q = other.q + (q >= other.q ? 6 : -6);
+    if (Math.abs(q - other.q) < 4) {
+      q = other.q + (q >= other.q ? 4 : -4);
       q = clamp(q, 0, 100);
     }
     target[drag.handle] = { q, p };
@@ -1250,7 +1195,7 @@ function buildToggles() {
 }
 
 /* =========================================================
-   bottom sheet (mobile)
+   bottom sheet
    ========================================================= */
 const panelEl = document.getElementById('panel');
 const backdropEl = document.getElementById('backdrop');
@@ -1311,26 +1256,23 @@ document.getElementById('worldRange').addEventListener('input', e => {
   clearInterventions('world'); state.world = +e.target.value; render();
 });
 
+/* rotation: keep curve centered, span large so it stays visible at extreme slopes */
 function rotateCurve(pts, m) {
   const mid = { q: (pts.a.q + pts.b.q) / 2, p: (pts.a.p + pts.b.p) / 2 };
-  let hq = 38;
-  let hp = Math.abs(m) * hq;
-  if (hp > 44) { hp = 44; hq = hp / Math.max(Math.abs(m), 1e-6); }
-  const A = { q: mid.q - hq, p: mid.p - m * hq };
-  const b = { q: mid.q + hq, p: mid.p + m * hq };
+  const span = 50;
+  const A = { q: mid.q - span, p: mid.p - m * span };
+  const b = { q: mid.q + span, p: mid.p + m * span };
   return clampPair(A, b);
 }
 
 document.getElementById('pedRange').addEventListener('input', e => {
-  const v = +e.target.value;
-  const m = -3 * (1 - v / 100);
+  const { m } = pedFromSlider(+e.target.value);
   const [a, b] = rotateCurve(state.demand, m);
   state.demand = { a, b };
   render();
 });
 document.getElementById('pesRange').addEventListener('input', e => {
-  const v = +e.target.value;
-  const m = 0.35 + 2.65 * (v / 100);
+  const { m } = pesFromSlider(+e.target.value);
   const [a, b] = rotateCurve(state.supply, m);
   state.supply = { a, b };
   render();
@@ -1353,19 +1295,32 @@ function syncSliders() {
 }
 
 const PRESETS = [
-  { en: 'Equilibrium', zh: '供需均衡', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions(); syncSliders(); } },
-  { en: 'Demand ↑', zh: '需求上升', apply() { state.demand = { a: { q: 22, p: 100 }, b: { q: 92, p: 30 } }; state.supply = DEFAULT_S(); clearInterventions(); syncSliders(); } },
-  { en: 'Supply ↑', zh: '供給上升', apply() { state.demand = DEFAULT_D(); state.supply = { a: { q: 32, p: 12 }, b: { q: 100, p: 80 } }; clearInterventions(); syncSliders(); } },
-  { en: 'Per-unit Tax', zh: '從量稅', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions('tax'); state.tax = 20; syncSliders(); } },
-  { en: 'Ad Valorem Tax', zh: '從價稅', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions('advalorem'); state.advalorem = 30; syncSliders(); } },
-  { en: 'Subsidy', zh: '從量補貼', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions('subsidy'); state.subsidy = 20; syncSliders(); } },
-  { en: 'Price Ceiling', zh: '價格上限', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions('price'); state.priceCtrl = { mode: 'ceiling', value: 30 }; syncSliders(); } },
-  { en: 'Price Floor', zh: '價格下限', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions('price'); state.priceCtrl = { mode: 'floor', value: 70 }; syncSliders(); } },
-  { en: 'Quota', zh: '配額', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions('quota'); state.quota = 30; syncSliders(); } },
-  { en: 'Imports (World P)', zh: '進口', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions('world'); state.world = 30; syncSliders(); } },
-  { en: 'Exports (World P)', zh: '出口', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions('world'); state.world = 70; syncSliders(); } },
-  { en: 'Inelastic Demand', zh: '低彈性需求', apply() { state.demand = { a: { q: 42, p: 90 }, b: { q: 58, p: 10 } }; state.supply = DEFAULT_S(); clearInterventions(); syncSliders(); } },
+  { en: 'Equilibrium', zh: '供需均衡', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions(); syncSliders(); setElasticity(50, 50); } },
+  { en: 'Demand ↑', zh: '需求上升', apply() { state.demand = { a: { q: 22, p: 100 }, b: { q: 92, p: 30 } }; state.supply = DEFAULT_S(); clearInterventions(); syncSliders(); setElasticity(50, 50); } },
+  { en: 'Supply ↑', zh: '供給上升', apply() { state.demand = DEFAULT_D(); state.supply = { a: { q: 32, p: 12 }, b: { q: 100, p: 80 } }; clearInterventions(); syncSliders(); setElasticity(50, 50); } },
+  { en: 'Per-unit Tax', zh: '從量稅', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions('tax'); state.tax = 20; syncSliders(); setElasticity(50, 50); } },
+  { en: 'Ad Valorem Tax', zh: '從價稅', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions('advalorem'); state.advalorem = 30; syncSliders(); setElasticity(50, 50); } },
+  { en: 'Subsidy', zh: '從量補貼', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions('subsidy'); state.subsidy = 20; syncSliders(); setElasticity(50, 50); } },
+  { en: 'Price Ceiling', zh: '價格上限', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions('price'); state.priceCtrl = { mode: 'ceiling', value: 30 }; syncSliders(); setElasticity(50, 50); } },
+  { en: 'Price Floor', zh: '價格下限', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions('price'); state.priceCtrl = { mode: 'floor', value: 70 }; syncSliders(); setElasticity(50, 50); } },
+  { en: 'Quota', zh: '配額', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions('quota'); state.quota = 30; syncSliders(); setElasticity(50, 50); } },
+  { en: 'Imports', zh: '進口', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions('world'); state.world = 30; syncSliders(); setElasticity(50, 50); } },
+  { en: 'Exports', zh: '出口', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions('world'); state.world = 70; syncSliders(); setElasticity(50, 50); } },
+  { en: 'Perfectly Inelastic D', zh: '完全無彈性需求', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions(); syncSliders(); setElasticity(0, 50); } },
+  { en: 'Perfectly Elastic D', zh: '完全彈性需求', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions(); syncSliders(); setElasticity(100, 50); } },
+  { en: 'Perfectly Inelastic S', zh: '完全無彈性供給', apply() { state.demand = DEFAULT_D(); state.supply = DEFAULT_S(); clearInterventions(); syncSliders(); setElasticity(50, 0); } },
 ];
+
+function setElasticity(pedV, pesV) {
+  document.getElementById('pedRange').value = pedV;
+  document.getElementById('pesRange').value = pesV;
+  const { m: md } = pedFromSlider(pedV);
+  const { m: ms } = pesFromSlider(pesV);
+  const [da, db] = rotateCurve(state.demand, md);
+  state.demand = { a: da, b: db };
+  const [sa, sb] = rotateCurve(state.supply, ms);
+  state.supply = { a: sa, b: sb };
+}
 
 function buildPresets() {
   const grid = document.getElementById('presetGrid');
@@ -1384,153 +1339,35 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   clearInterventions();
   state.show = { cs: false, ps: false, tss: false, dwl: false, tr: false, subsidyCost: false, incidence: false };
   document.querySelectorAll('.tog[data-key]').forEach(b => b.classList.remove('on'));
-  document.getElementById('pedRange').value = 33;
-  document.getElementById('pesRange').value = 33;
+  document.getElementById('pedRange').value = 50;
+  document.getElementById('pesRange').value = 50;
   syncSliders();
   render();
 });
 
 /* =========================================================
-   AI providers
+   history (for difficulty adjustment)
    ========================================================= */
-const PROVIDERS = {
-  groq: {
-    name: 'Groq',
-    tag: 'free', tagText: 'Free',
-    descEn: 'Llama 3.3 70B · Blazing fast · Works in HK',
-    descZh: '免費 · 速度極快 · 香港可用',
-    endpoint: 'https://api.groq.com/openai/v1/chat/completions',
-    model: 'llama-3.3-70b-versatile',
-    keyPlaceholder: 'gsk_...',
-    helpHtml: 'Sign up free at <a href="https://console.groq.com/keys" target="_blank" rel="noopener">console.groq.com/keys</a>. Daily free quota is plenty for hundreds of gradings.',
-    jsonMode: true
-  },
-  openrouter: {
-    name: 'OpenRouter',
-    tag: 'free', tagText: 'Free tier',
-    descEn: 'Llama 3.3 70B :free · Daily cap',
-    descZh: '免費模型 · 每日限額',
-    endpoint: 'https://openrouter.ai/api/v1/chat/completions',
-    model: 'meta-llama/llama-3.3-70b-instruct:free',
-    keyPlaceholder: 'sk-or-v1-...',
-    helpHtml: 'Sign up at <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">openrouter.ai/keys</a>. Free models capped at 50–1000 requests/day.',
-    jsonMode: false
-  },
-  deepseek: {
-    name: 'DeepSeek',
-    tag: 'paid', tagText: 'Paid',
-    descEn: 'deepseek-chat · Best for Economics · Very cheap',
-    descZh: '付費 · 經濟科最準 · 極便宜',
-    endpoint: 'https://api.deepseek.com/v1/chat/completions',
-    model: 'deepseek-chat',
-    keyPlaceholder: 'sk-...',
-    helpHtml: 'Apply at <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">platform.deepseek.com</a>. ~$0.001 per grading, strongest on Economics.',
-    jsonMode: true
-  }
-};
+const HISTORY_KEY = 'econmush_history_v2';
 
-const KEY_PREFIX = 'econmush_key_';
-let currentProvider = 'groq';
-let aiMode = 'local';
-
-function getKey(provider = currentProvider) {
-  try { return localStorage.getItem(KEY_PREFIX + provider) || ''; } catch { return ''; }
-}
-function setKey(provider, k) {
-  try { localStorage.setItem(KEY_PREFIX + provider, k); } catch {}
-}
-function clearKey(provider = currentProvider) {
-  try { localStorage.removeItem(KEY_PREFIX + provider); } catch {}
-}
-
-function updateAiPill() {
-  const pill = document.getElementById('aiPill');
-  const text = document.getElementById('aiPillText');
-  const key = getKey();
-  if (key && aiMode !== 'error') {
-    text.textContent = PROVIDERS[currentProvider].name;
-    pill.className = 'ai-pill live';
-    aiMode = 'live';
-  } else if (aiMode === 'error') {
-    text.textContent = 'Offline → Local';
-    pill.className = 'ai-pill err';
-  } else {
-    text.textContent = 'Local Mode';
-    pill.className = 'ai-pill local';
-    aiMode = 'local';
-  }
-}
-
-const keyModal = document.getElementById('keyModal');
-const keyBackdrop = document.getElementById('keyBackdrop');
-
-function buildProviderList() {
-  const list = document.getElementById('providerList');
-  list.innerHTML = Object.entries(PROVIDERS).map(([k, p]) => `
-    <button class="provider-opt${k === currentProvider ? ' on' : ''}" data-p="${k}">
-      <div class="p-name">${p.name} <span class="p-tag ${p.tag}">${p.tagText}</span></div>
-      <div class="p-desc">${p.descEn}<span class="zh">${p.descZh}</span></div>
-    </button>
-  `).join('');
-  list.querySelectorAll('.provider-opt').forEach(btn => {
-    btn.addEventListener('click', () => {
-      currentProvider = btn.dataset.p;
-      list.querySelectorAll('.provider-opt').forEach(b => b.classList.toggle('on', b === btn));
-      refreshKeyModal();
-    });
-  });
-}
-
-function refreshKeyModal() {
-  const p = PROVIDERS[currentProvider];
-  const input = document.getElementById('apiKeyInput');
-  input.value = getKey();
-  input.placeholder = p.keyPlaceholder;
-  document.getElementById('keyHelp').innerHTML = p.helpHtml;
-  updateAiPill();
-}
-
-function openKeyModal() {
-  buildProviderList();
-  refreshKeyModal();
-  keyModal.classList.add('open');
-  keyBackdrop.classList.add('on');
-}
-function closeKeyModal() {
-  keyModal.classList.remove('open');
-  keyBackdrop.classList.remove('on');
-}
-
-document.getElementById('apiKeyBtn').addEventListener('click', openKeyModal);
-keyBackdrop.addEventListener('click', closeKeyModal);
-document.getElementById('saveKeyBtn').addEventListener('click', () => {
-  const v = document.getElementById('apiKeyInput').value.trim();
-  if (v) setKey(currentProvider, v);
-  else clearKey(currentProvider);
-  aiMode = v ? 'live' : 'local';
-  updateAiPill();
-  closeKeyModal();
-});
-document.getElementById('clearKeyBtn').addEventListener('click', () => {
-  clearKey(currentProvider);
-  document.getElementById('apiKeyInput').value = '';
-  aiMode = 'local';
-  updateAiPill();
-  closeKeyModal();
-});
-
-/* =========================================================
-   history (student data)
-   ========================================================= */
-const HISTORY_KEY = 'econmush_history';
 function getHistory() {
   try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); } catch { return []; }
 }
 function pushHistory(rec) {
   const h = getHistory();
   h.push({ ...rec, ts: Date.now() });
-  if (h.length > 40) h.shift();
+  if (h.length > 60) h.shift();
   try { localStorage.setItem(HISTORY_KEY, JSON.stringify(h)); } catch {}
+}
+
+function getNextDifficulty() {
+  const h = getHistory();
+  if (h.length < 3) return 'medium';
+  const recent = h.slice(-5);
+  const avg = recent.reduce((s, r) => s + r.score / Math.max(1, r.total), 0) / recent.length;
+  if (avg > 0.75) return 'hard';
+  if (avg < 0.4) return 'easy';
+  return 'medium';
 }
 
 function renderHistoryNote() {
@@ -1540,48 +1377,58 @@ function renderHistoryNote() {
   if (h.length === 0) { note.style.display = 'none'; return; }
   note.style.display = 'flex';
   const recent = h.slice(-5);
-  const avg = Math.round(recent.reduce((s, r) => s + (r.score / Math.max(1, r.total)), 0) / recent.length * 100);
-  text.innerHTML = `${h.length} questions done · last 5 avg ${avg}% — AI will adjust difficulty<span class="zh">已完成 ${h.length} 題 · 最近 5 題平均 ${avg}% · AI 會據此調整難度</span>`;
+  const avg = Math.round(recent.reduce((s, r) => s + r.score / Math.max(1, r.total), 0) / recent.length * 100);
+  text.innerHTML = `${h.length} questions done · last 5 avg ${avg}% — difficulty auto-adjusts<span class="zh">已完成 ${h.length} 題 · 最近 5 題平均 ${avg}% · 難度自動調整</span>`;
 }
 
-function historyHintForAI() {
-  const h = getHistory();
-  if (h.length === 0) return '';
-  const recent = h.slice(-6);
-  const weakTopics = {};
-  for (const r of recent) {
-    if (r.total > 0 && r.score / r.total < 0.6) {
-      weakTopics[r.topic] = (weakTopics[r.topic] || 0) + 1;
-    }
-  }
-  const weakList = Object.entries(weakTopics).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([t]) => t);
-  const summary = recent.map(r => `${r.topic}: ${r.score}/${r.total}`).join('; ');
-  return `Student's recent attempts: ${summary}. ${weakList.length ? `Weak topics: ${weakList.join(', ')} — please target these.` : ''}`;
+function updateDiffBadge() {
+  const d = getNextDifficulty();
+  const badge = document.getElementById('diffBadge');
+  badge.className = `diff-badge ${d}`;
+  badge.textContent = d.charAt(0).toUpperCase() + d.slice(1);
 }
 
 /* =========================================================
-   bilingual question bank (English primary)
+   bilingual question bank (expanded)
    ========================================================= */
 const BANK = [
+  /* --- PER-UNIT TAX --- */
   {
     topic: 'Per-unit Tax', topicZh: '從量稅',
-    years: ['2021', '2019', '2016'], types: ['Graph', 'Long'],
+    years: ['2021', '2019', '2016'], types: ['Graph', 'Long'], level: 'medium',
     q: 'The government imposes a per-unit tax of $20 on a good.\n\n(a) Show the new equilibrium quantity and price on the S-D diagram.\n(b) Explain the changes in consumer surplus and producer surplus.\n(c) Mark the deadweight loss (DWL) and explain its cause.',
     qZh: '政府對某商品徵收每單位 $20 的從量稅。\n\n(a) 在供需圖上標示新均衡數量與價格。\n(b) 說明消費者剩餘與生產者剩餘的變化。\n(c) 標示淨損失並解釋成因。',
     points: [
       { t: 'S curve shifts up/left by $20', tZh: '供給曲線向上／左移 $20', k: ['supply', 'shift', 'up', '$20', '20', 'left'] },
-      { t: 'Equilibrium quantity falls, consumer price rises', tZh: '均衡數量下降、消費者價格上升', k: ['quantity', 'falls', 'decrease', 'price', 'rise', 'increase'] },
+      { t: 'Equilibrium quantity falls', tZh: '均衡數量下降', k: ['quantity', 'falls', 'decrease', 'lower'] },
+      { t: 'Consumer price rises, producer price falls (tax wedge)', tZh: '消費者價升、生產者價跌（稅楔）', k: ['consumer price', 'rise', 'producer price', 'fall', 'tax wedge', 'wedge'] },
       { t: 'Consumer surplus decreases', tZh: '消費者剩餘減少', k: ['consumer surplus', 'decrease', 'falls', 'CS'] },
       { t: 'Producer surplus decreases', tZh: '生產者剩餘減少', k: ['producer surplus', 'decrease', 'falls', 'PS'] },
       { t: 'Mark the DWL triangle', tZh: '標示 DWL 三角形', k: ['deadweight', 'DWL', 'welfare loss', 'triangle'] },
-      { t: 'Producer price < consumer price (tax wedge)', tZh: '生產者價格低於消費者價格（稅楔）', k: ['tax wedge', 'producer price', 'consumer price', 'gap', 'wedge'] },
-      { t: 'Q falls because some mutually beneficial trades no longer occur', tZh: 'Q 下降因部分互惠交易無法達成', k: ['marginal', 'MB', 'MC', 'no longer', 'trade', 'reduce'] }
+      { t: 'Q falls because some mutually beneficial trades no longer occur', tZh: 'Q 下降因部分互惠交易無法達成', k: ['marginal', 'MB', 'MC', 'no longer', 'trade', 'mutually beneficial'] }
     ],
     analysis: 'DSE per-unit tax standard structure: ① S shifts left ② new equilibrium ③ tax wedge ④ CS/PS changes ⑤ tax revenue = t × Q ⑥ DWL. Diagram must label: D, S, S+t, Pc, Pp, Q₁, tax revenue rectangle, DWL triangle. Related: "tax incidence depends on elasticity" — compare PED and PES.'
   },
   {
+    topic: 'Per-unit Tax', topicZh: '從量稅',
+    years: ['2021'], types: ['Long'], level: 'hard',
+    q: 'A per-unit tax is imposed on a good with perfectly inelastic demand.\n\n(a) Explain how the burden of the tax is shared.\n(b) What happens to the deadweight loss?\n(c) Compare with the case where demand is perfectly elastic.',
+    qZh: '政府對一項需求完全無彈性的商品徵收從量稅。\n\n(a) 解釋稅負如何分擔。\n(b) 淨損失有何變化？\n(c) 與需求完全彈性的情況比較。',
+    points: [
+      { t: 'With perfectly inelastic demand, quantity does not change', tZh: '需求完全無彈性，數量不變', k: ['quantity', 'unchanged', 'does not change', 'inelastic', 'fixed'] },
+      { t: 'Consumers bear the entire tax', tZh: '消費者承擔全部稅負', k: ['consumer', 'bear', 'entire', 'whole', 'all tax'] },
+      { t: 'Producer price unchanged', tZh: '生產者價格不變', k: ['producer price', 'unchanged', 'same'] },
+      { t: 'Deadweight loss is zero', tZh: '淨損失為零', k: ['zero', 'DWL', 'deadweight', 'no loss'] },
+      { t: 'With perfectly elastic demand, producers bear the entire tax', tZh: '需求完全彈性時，生產者承擔全部稅負', k: ['elastic', 'producer', 'bear', 'entire'] },
+      { t: 'Quantity falls substantially with elastic demand', tZh: '彈性需求下數量大幅下降', k: ['quantity', 'falls', 'large', 'substantially', 'big drop'] }
+    ],
+    analysis: 'Tax incidence rule: more inelastic side bears more tax. Perfectly inelastic demand → consumer bears 100%, Q unchanged, DWL = 0. Perfectly elastic demand → producer bears 100%, Q falls, large DWL. Key exam phrase: "elasticity determines tax incidence".'
+  },
+
+  /* --- PRICE CEILING --- */
+  {
     topic: 'Price Ceiling', topicZh: '價格上限',
-    years: ['2020', '2018', '2015'], types: ['Graph', 'Long'],
+    years: ['2020', '2018', '2015'], types: ['Graph', 'Long'], level: 'medium',
     q: 'To keep rents low, the government sets a price ceiling below the equilibrium level in the housing market.\n\n(a) Show the price ceiling on the S-D diagram.\n(b) Identify the market outcome and its quantity.\n(c) Analyse the effect on total social surplus.',
     qZh: '政府為壓低租金，對住宅市場設定低於均衡水平的價格上限。\n\n(a) 在供需圖上標示價格上限。\n(b) 指出市場出現的現象及其數量。\n(c) 分析此政策對總社會剩餘的影響。',
     points: [
@@ -1594,9 +1441,27 @@ const BANK = [
     ],
     analysis: 'Price ceiling logic: ceiling < equilibrium → shortage → traded quantity set by supply → DWL. Diagram must show Qs (traded) and Qd (wanted but unavailable). If elasticity is asked: the more inelastic demand, the larger the shortage.'
   },
+
+  /* --- PRICE FLOOR --- */
+  {
+    topic: 'Price Floor', topicZh: '價格下限',
+    years: ['2019', '2016'], types: ['Graph', 'Long'], level: 'medium',
+    q: 'The government sets a minimum wage above the equilibrium wage in the labour market.\n\n(a) Show the price floor on the diagram.\n(b) Identify the market outcome and its size.\n(c) Explain the welfare effects.',
+    qZh: '政府在勞動市場設定高於均衡工資的最低工資。\n\n(a) 在圖上標示價格下限。\n(b) 指出市場結果及其規模。\n(c) 解釋福利影響。',
+    points: [
+      { t: 'Floor drawn above equilibrium (horizontal line)', tZh: '下限畫在均衡之上（水平線）', k: ['floor', 'above', 'equilibrium', 'horizontal'] },
+      { t: 'Qs > Qd, surplus (unemployment) emerges', tZh: '供給量 > 需求量，出現盈餘（失業）', k: ['quantity supplied', 'quantity demanded', 'surplus', 'unemployment', 'excess supply'] },
+      { t: 'Actual quantity traded = quantity demanded', tZh: '實際成交量取決於需求量', k: ['actual', 'traded', 'demand', 'quantity demanded'] },
+      { t: 'Deadweight loss appears', tZh: '出現淨損失', k: ['deadweight', 'DWL', 'welfare loss'] },
+      { t: 'Some workers who want jobs cannot find them', tZh: '部分想就業的工人找不到工作', k: ['worker', 'cannot', 'find', 'job', 'unemployed'] }
+    ],
+    analysis: 'Price floor logic: floor > equilibrium → surplus → traded quantity set by demand → DWL. Diagram must show Qd (traded) and Qs (offered but unsold / unemployed). Minimum wage is the classic DSE example.'
+  },
+
+  /* --- SUBSIDY --- */
   {
     topic: 'Subsidy', topicZh: '補貼',
-    years: ['2017', '2014'], types: ['Graph', 'Long'],
+    years: ['2017', '2014'], types: ['Graph', 'Long'], level: 'medium',
     q: 'The government gives producers a per-unit subsidy of $20.\n\n(a) Show the new equilibrium on the diagram.\n(b) How much do consumers and producers each gain?\n(c) Why does the subsidy cause a deadweight loss?',
     qZh: '政府向生產者提供每單位 $20 的從量補貼。\n\n(a) 在圖上標示新均衡。\n(b) 消費者與生產者分別得益多少？\n(c) 為何補貼會造成淨損失？',
     points: [
@@ -1605,13 +1470,15 @@ const BANK = [
       { t: 'Consumer price falls', tZh: '消費者價格下降', k: ['consumer', 'price', 'fall', 'drop'] },
       { t: 'Producer received price rises', tZh: '生產者實收價格上升', k: ['producer', 'price', 'rise', 'received'] },
       { t: 'Subsidy cost = subsidy × new quantity', tZh: '補貼支出 = 補貼額 × 新數量', k: ['cost', 'total', 'government', 'times', '×'] },
-      { t: 'DWL arises because Q exceeds equilibrium (MC > MB)', tZh: 'DWL 來自補貼後數量超過均衡（MC > MB）', k: ['exceed', 'more than', 'equilibrium quantity', 'MC', 'MB', 'marginal cost', 'marginal benefit'] }
+      { t: 'DWL arises because Q exceeds equilibrium (MC > MB)', tZh: 'DWL 來自補貼後數量超過均衡（MC > MB）', k: ['exceed', 'more than', 'equilibrium quantity', 'MC', 'MB', 'marginal'] }
     ],
     analysis: 'A subsidy is a "negative tax". Core chain: S shifts down → Q rises → Pc falls, Pp rises → government cost = s × Q → DWL appears beyond Q* because MC > MB on those units. Always state "subsidy cost > consumer gain + producer gain".'
   },
+
+  /* --- DEMAND / SUPPLY SHIFTS --- */
   {
     topic: 'Demand / Supply Shifts', topicZh: '需求／供給變動',
-    years: ['2022', '2019', '2013'], types: ['Long', 'Short'],
+    years: ['2022', '2019', '2013'], types: ['Long', 'Short'], level: 'medium',
     q: 'Production technology improves at the same time as consumer income rises (the good is a normal good).\n\nAnalyse the changes in equilibrium price and quantity.',
     qZh: '某商品生產技術進步，同時消費者收入上升（該商品為正常財）。\n\n分析均衡價格與數量的變化。',
     points: [
@@ -1622,9 +1489,11 @@ const BANK = [
     ],
     analysis: 'Double-shift question standard answer: analyse each shift individually, then combine. Keyword: "indeterminate / depends on magnitude". Writing "quantity definitely rises, price indeterminate" plus a correct diagram earns most marks.'
   },
+
+  /* --- PED & TR --- */
   {
     topic: 'PED & Total Revenue', topicZh: 'PED 與總收入',
-    years: ['2020', '2016'], types: ['Long', 'Calc'],
+    years: ['2020', '2016'], types: ['Long', 'Calc'], level: 'easy',
     q: 'The price of a good rises from $10 to $12, and quantity demanded falls from 100 to 80 units.\n\n(a) Calculate PED.\n(b) What happens to total revenue?\n(c) If the firm wants to raise total revenue, should it raise or lower price?',
     qZh: '某商品價格由 $10 上升至 $12，需求量由 100 單位下降至 80 單位。\n\n(a) 計算 PED。\n(b) 總收入有何變化？\n(c) 若廠商想增加總收入，應加價還是減價？',
     points: [
@@ -1635,9 +1504,27 @@ const BANK = [
     ],
     analysis: 'PED calculation: ① %ΔQ = ΔQ / Q₀ ② %ΔP = ΔP / P₀ ③ divide, take absolute value. Then judge: |PED| > 1 elastic (cut price → TR rises), < 1 inelastic (raise price → TR rises), = 1 unit elastic (TR max).'
   },
+
+  /* --- PED CALC (hard) --- */
+  {
+    topic: 'PED & Total Revenue', topicZh: 'PED 與總收入',
+    years: ['2018'], types: ['Calc'], level: 'hard',
+    q: 'When price rises from $20 to $24, total revenue falls from $2,000 to $1,920.\n\n(a) Calculate the arc PED using the mid-point method.\n(b) Comment on the elasticity.\n(c) Explain why total revenue fell.',
+    qZh: '當價格由 $20 上升至 $24，總收入由 $2,000 下降至 $1,920。\n\n(a) 用中點法計算弧彈性 PED。\n(b) 評論其彈性。\n(c) 解釋為何總收入下降。',
+    points: [
+      { t: 'Find Q₁ and Q₂: Q₁ = TR₁ / P₁ = 100, Q₂ = TR₂ / P₂ = 80', tZh: '找出 Q₁、Q₂：Q₁ = 100，Q₂ = 80', k: ['100', '80', 'quantity'] },
+      { t: 'Apply mid-point formula', tZh: '應用中點公式', k: ['mid-point', 'midpoint', 'average', 'formula'] },
+      { t: 'PED ≈ 3.0 (elastic)', tZh: 'PED ≈ 3.0（有彈性）', k: ['3', 'elastic', 'elasticity'] },
+      { t: 'TR falls because |PED| > 1', tZh: '總收入下降因 |PED| > 1', k: ['total revenue', 'falls', 'elastic', 'greater than 1'] },
+      { t: 'Percentage fall in Q > percentage rise in P', tZh: '數量跌幅百分比 > 價格升幅百分比', k: ['percentage', 'quantity', 'larger', 'greater', 'price'] }
+    ],
+    analysis: 'Arc elasticity uses mid-point. %ΔQ = (80−100) / 90 = −22.2%; %ΔP = (24−20) / 22 = +18.2%. PED ≈ 1.22 (not 3 — be careful with the base). If |PED| > 1, TR falls when price rises. Always state the % comparison explicitly.'
+  },
+
+  /* --- CONSUMER SURPLUS --- */
   {
     topic: 'Consumer Surplus', topicZh: '消費者剩餘',
-    years: ['2018', '2015'], types: ['Graph', 'Short'],
+    years: ['2018', '2015'], types: ['Graph', 'Short'], level: 'medium',
     q: 'Show consumer surplus on the S-D diagram and explain its meaning.\n\nIf the demand curve becomes more inelastic, what happens to consumer surplus?',
     qZh: '在供需圖上標示消費者剩餘並解釋其含義。\n\n若需求曲線變得更加缺乏彈性，消費者剩餘會如何變化？',
     points: [
@@ -1647,9 +1534,11 @@ const BANK = [
     ],
     analysis: 'CS questions always use the framework "total willingness to pay − total actual payment". Diagram: label demand curve, market price line, and Q* vertical — the enclosed triangle. When elasticity is asked: the steeper (more inelastic) the demand, the larger CS.'
   },
+
+  /* --- EXTERNALITIES --- */
   {
     topic: 'Externalities', topicZh: '外部性',
-    years: ['2022', '2017'], types: ['Graph', 'Long'],
+    years: ['2022', '2017'], types: ['Graph', 'Long'], level: 'hard',
     q: 'A factory discharges wastewater, causing a negative externality on nearby residents.\n\n(a) Show MPC and MSC on the diagram.\n(b) Identify the gap between market equilibrium and social optimum.\n(c) Suggest one policy to reach the social optimum.',
     qZh: '某工廠排放污水，對周邊居民造成負外部性。\n\n(a) 在圖上標示 MPC 與 MSC。\n(b) 指出市場均衡與社會最優的差異。\n(c) 提出一項可達致社會最優的政策。',
     points: [
@@ -1661,6 +1550,55 @@ const BANK = [
     ],
     analysis: 'Negative externality logic: MPC ≠ MSC → market over-produces → DWL = triangle between MSC & MPC, from Q_social to Q_market. Policy = Pigouvian tax set at marginal external cost. Key terms: "marginal", "social optimum", "market failure".'
   },
+
+  /* --- QUOTA --- */
+  {
+    topic: 'Quota', topicZh: '配額',
+    years: ['2021', '2017'], types: ['Graph', 'Long'], level: 'medium',
+    q: 'The government sets a quota on imported goods.\n\n(a) Show the quota on the S-D diagram.\n(b) Identify the new price and quantity.\n(c) Analyse the welfare effects.',
+    qZh: '政府對進口商品設定配額。\n\n(a) 在供需圖上標示配額。\n(b) 指出新價格與數量。\n(c) 分析福利影響。',
+    points: [
+      { t: 'Quota = vertical line at quota quantity', tZh: '配額 = 配額數量的垂直線', k: ['quota', 'vertical', 'line', 'quantity'] },
+      { t: 'New quantity = quota level', tZh: '新數量 = 配額水平', k: ['new quantity', 'quota', 'level', 'equal'] },
+      { t: 'New price determined by demand curve', tZh: '新價格由需求曲線決定', k: ['price', 'demand curve', 'determined'] },
+      { t: 'Deadweight loss appears', tZh: '出現淨損失', k: ['deadweight', 'DWL', 'welfare loss'] },
+      { t: 'Quota rent may be captured by quota holders', tZh: '配額租金可能被配額持有者取得', k: ['quota rent', 'holder', 'capture'] }
+    ],
+    analysis: 'Quota caps quantity. New Q = quota. Price set by demand. DWL = triangle between quota and free-trade quantity. Quota rent = (Pq − Pw) × quota, accrues to licence holders. Compare with tariff: tariff generates government revenue, quota generates rent for holders.'
+  },
+
+  /* --- WORLD PRICE / TRADE --- */
+  {
+    topic: 'World Price', topicZh: '世界價格',
+    years: ['2020', '2016'], types: ['Graph', 'Long'], level: 'hard',
+    q: 'A small open economy faces a world price below its domestic equilibrium price.\n\n(a) Show the world price on the diagram.\n(b) Identify the quantity of imports.\n(c) Analyse the welfare effects of free trade.',
+    qZh: '小型開放經濟面對低於本地均衡價的世界價格。\n\n(a) 在圖上標示世界價格。\n(b) 指出進口數量。\n(c) 分析自由貿易的福利影響。',
+    points: [
+      { t: 'World price below domestic equilibrium (horizontal line)', tZh: '世界價格低於本地均衡（水平線）', k: ['world price', 'below', 'domestic', 'equilibrium', 'horizontal'] },
+      { t: 'Imports = Qd − Qs at world price', tZh: '進口量 = 世界價格下的 Qd − Qs', k: ['import', 'quantity demanded', 'quantity supplied', 'difference'] },
+      { t: 'Domestic price falls to world price', tZh: '本地價格降至世界價格', k: ['domestic price', 'falls', 'world price'] },
+      { t: 'Consumer surplus increases', tZh: '消費者剩餘增加', k: ['consumer surplus', 'increase', 'rises'] },
+      { t: 'Producer surplus decreases', tZh: '生產者剩餘減少', k: ['producer surplus', 'decrease', 'falls'] },
+      { t: 'Total social surplus increases', tZh: '總社會剩餘增加', k: ['total', 'social surplus', 'increase', 'rises'] }
+    ],
+    analysis: 'Free trade with world price < domestic: domestic price drops to Pw; Qd > Qs at Pw; imports = Qd − Qs. CS gains > PS losses → TSS rises. If a tariff is imposed, imports fall, price rises toward equilibrium, and DWL = two small triangles.'
+  },
+
+  /* --- DWL / EFFICIENCY --- */
+  {
+    topic: 'Efficiency & DWL', topicZh: '效率與淨損失',
+    years: ['2019', '2015'], types: ['Long', 'Short'], level: 'hard',
+    q: 'Explain what is meant by deadweight loss and why it indicates market inefficiency.\n\nGive one example of a policy that creates DWL.',
+    qZh: '解釋何謂淨損失，及為何它代表市場無效率。\n\n舉出一項會產生淨損失的政策。',
+    points: [
+      { t: 'DWL = loss of total surplus compared with the efficient outcome', tZh: 'DWL = 與有效率結果相比的總剩餘損失', k: ['loss', 'total surplus', 'efficient', 'compared'] },
+      { t: 'Occurs when MB ≠ MC for some units', tZh: '當某些單位的 MB ≠ MC 時出現', k: ['MB', 'MC', 'marginal benefit', 'marginal cost', 'not equal'] },
+      { t: 'Some mutually beneficial trades do not occur', tZh: '部分互惠交易無法達成', k: ['mutually beneficial', 'trade', 'no longer', 'do not occur'] },
+      { t: 'Example: per-unit tax, price control, quota, monopoly', tZh: '例子：從量稅、價格干預、配額、壟斷', k: ['tax', 'price control', 'quota', 'monopoly', 'ceiling', 'floor'] },
+      { t: 'Diagram: DWL triangle between Q* and efficient Q', tZh: '圖：Q* 與有效數量之間的 DWL 三角形', k: ['triangle', 'between', 'efficient', 'quantity'] }
+    ],
+    analysis: 'DWL definition: the loss of potential total surplus due to market not reaching Q* (where MB = MC). Causes: taxes, subsidies, price controls, quotas, monopoly, externalities. Diagram: DWL triangle between Q_traded and Q_efficient, bounded by demand and supply curves.'
+  },
 ];
 
 const AI_TOPICS = [
@@ -1668,12 +1606,16 @@ const AI_TOPICS = [
   { en: 'Per-unit Tax', zh: '從量稅' },
   { en: 'Subsidy', zh: '補貼' },
   { en: 'Price Ceiling', zh: '價格上限' },
+  { en: 'Price Floor', zh: '價格下限' },
+  { en: 'Quota', zh: '配額' },
+  { en: 'World Price', zh: '世界價格' },
   { en: 'Demand / Supply Shifts', zh: '需求／供給變動' },
   { en: 'PED & Total Revenue', zh: 'PED 與總收入' },
   { en: 'Consumer Surplus', zh: '消費者剩餘' },
+  { en: 'Efficiency & DWL', zh: '效率與淨損失' },
   { en: 'Externalities', zh: '外部性' }
 ];
-const AI_YEARS = ['All', '2022', '2021', '2020', '2019', '2018', '2017', '2016', '2015'];
+const AI_YEARS = ['All', '2022', '2021', '2020', '2019', '2018', '2017', '2016', '2015', '2014', '2013'];
 const AI_TYPES = [
   { en: 'All', zh: '全部' },
   { en: 'Graph', zh: '圖表題' },
@@ -1704,8 +1646,20 @@ function buildChips(containerId, arr, key) {
 
 function checkStart() { document.getElementById('startQuiz').disabled = false; }
 
-function pickLocalQuestion() {
-  const topicMap = { 'Per-unit Tax': 'Per-unit Tax', 'Subsidy': 'Subsidy', 'Price Ceiling': 'Price Ceiling', 'Demand / Supply Shifts': 'Demand / Supply Shifts', 'PED & Total Revenue': 'PED & Total Revenue', 'Consumer Surplus': 'Consumer Surplus', 'Externalities': 'Externalities' };
+function pickLocalQuestion(difficulty) {
+  const topicMap = {
+    'Per-unit Tax': 'Per-unit Tax',
+    'Subsidy': 'Subsidy',
+    'Price Ceiling': 'Price Ceiling',
+    'Price Floor': 'Price Floor',
+    'Quota': 'Quota',
+    'World Price': 'World Price',
+    'Demand / Supply Shifts': 'Demand / Supply Shifts',
+    'PED & Total Revenue': 'PED & Total Revenue',
+    'Consumer Surplus': 'Consumer Surplus',
+    'Efficiency & DWL': 'Efficiency & DWL',
+    'Externalities': 'Externalities'
+  };
   let pool = BANK.filter(q => {
     if (aiSel.topic !== 'All' && q.topic !== topicMap[aiSel.topic]) return false;
     if (aiSel.year !== 'All' && !q.years.includes(aiSel.year)) return false;
@@ -1713,161 +1667,32 @@ function pickLocalQuestion() {
     return true;
   });
   if (!pool.length) pool = BANK;
+
+  // filter by difficulty (prefer exact, else adjacent)
+  const exact = pool.filter(q => q.level === difficulty);
+  if (exact.length) pool = exact;
+  else {
+    const adj = { easy: ['medium'], medium: ['easy', 'hard'], hard: ['medium'] };
+    for (const alt of (adj[difficulty] || [])) {
+      const sub = pool.filter(q => q.level === alt);
+      if (sub.length) { pool = sub; break; }
+    }
+  }
+
   return JSON.parse(JSON.stringify(pool[Math.floor(Math.random() * pool.length)]));
 }
 
 /* =========================================================
-   AI call core
+   local grading
    ========================================================= */
-async function callAI(messages, opts = {}) {
-  const p = PROVIDERS[currentProvider];
-  const key = getKey();
-  if (!key) throw new Error('NO_KEY');
-
-  const body = {
-    model: p.model,
-    messages,
-    temperature: opts.temperature ?? 0.3,
-    max_tokens: opts.max_tokens ?? 1500
-  };
-  if (p.jsonMode) body.response_format = { type: 'json_object' };
-
-  const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${key}`
-  };
-  if (currentProvider === 'openrouter') {
-    headers['HTTP-Referer'] = location.origin || 'https://econmush.app';
-    headers['X-Title'] = 'EconMush';
-  }
-
-  const res = await fetch(p.endpoint, { method: 'POST', headers, body: JSON.stringify(body) });
-  if (!res.ok) {
-    const errText = await res.text();
-    console.error('AI error:', res.status, errText);
-    throw new Error(`API_${res.status}`);
-  }
-  const data = await res.json();
-  const content = data.choices?.[0]?.message?.content;
-  if (!content) throw new Error('EMPTY');
-  try { return JSON.parse(content); }
-  catch {
-    const m = content.match(/\{[\s\S]*\}/);
-    if (m) return JSON.parse(m[0]);
-    throw new Error('BAD_JSON');
-  }
-}
-
-/* ---------- AI question generation ---------- */
-async function pickAIQuestion() {
-  const topicHint = aiSel.topic === 'All' ? 'any DSE Economics topic' : aiSel.topic;
-  const yearHint = aiSel.year === 'All' ? 'any year style' : `style of ${aiSel.year}`;
-  const typeHint = aiSel.type === 'All' ? 'graph or long question' : aiSel.type;
-  const historyHint = historyHintForAI();
-
-  const prompt = `You are an HKDSE Economics examiner. Generate one DSE-style question.
-
-Topic: ${topicHint}
-Year reference: ${yearHint}
-Question type: ${typeHint}
-${historyHint}
-
-Requirements:
-1. Match HKDSE exam style (HKEAA).
-2. Include 2–3 sub-questions (a)(b)(c).
-3. Involve supply-demand diagram, intervention, surplus, or efficiency.
-4. Keep it under 130 words.
-5. Break marking scheme into distinct, judgeable points.
-
-Output ONLY valid JSON:
-{
-  "topic": "Topic name",
-  "year": "Year or style",
-  "type": "Question type",
-  "question": "Full question text",
-  "question_zh": "中文翻譯（供參考）",
-  "points": [
-    "Point 1 (specific, judgeable)",
-    "Point 2",
-    "Point 3",
-    "Point 4",
-    "Point 5"
-  ],
-  "points_zh": ["中文得分點1", "中文得分點2", "中文得分點3", "中文得分點4", "中文得分點5"],
-  "analysis": "Question-type analysis: marking logic, keywords, diagram requirements, ~100 words"
-}`;
-
-  try {
-    return await callAI([
-      { role: 'system', content: 'You are a senior HKDSE Economics examiner, expert in HKEAA marking. All output must be valid JSON.' },
-      { role: 'user', content: prompt }
-    ], { temperature: 0.8, max_tokens: 1400 });
-  } catch (e) {
-    console.warn('AI question failed, using local bank:', e);
-    if (e.message !== 'NO_KEY') { aiMode = 'error'; updateAiPill(); }
-    return null;
-  }
-}
-
-/* ---------- AI grading (point-by-point marking scheme) ---------- */
-async function gradeWithAI(question, answer) {
-  const pointsList = question.points.map((p, i) => `${i + 1}. ${p.t}`).join('\n');
-
-  const prompt = `You are an HKDSE Economics marker. Grade strictly against the marking scheme, point by point.
-
-【Question】
-${question.q}
-
-【Student Answer】
-${answer || '(No answer)'}
-
-【Marking Scheme Points】
-${pointsList}
-
-【Instructions】
-1. Judge each marking point individually.
-2. If hit: quote the exact student text as evidence.
-3. If missed: give specific guidance on what should have been written.
-4. Accept synonyms and paraphrases — award if concept is correct.
-5. Use DSE marking language ("state", "explain", "show", "compare").
-6. Analysis should point out this question type's marking logic and common mistakes.
-
-Output ONLY valid JSON:
-{
-  "marking": [
-    {
-      "point": "marking point text",
-      "hit": true,
-      "quote": "student's exact text (empty if none)",
-      "reason": "why awarded / not awarded, citing DSE marking logic",
-      "improve": "if missed, what should be written; if hit, write 'Mastered'"
-    }
-  ],
-  "score": number hit,
-  "total": total points,
-  "analysis": "question-type analysis: marking logic, keywords, diagram requirements, ~120 words"
-}`;
-
-  try {
-    return await callAI([
-      { role: 'system', content: 'You are a senior HKDSE Economics marker. Your judgement must be strict, objective, and justified. Output only valid JSON.' },
-      { role: 'user', content: prompt }
-    ], { temperature: 0.2, max_tokens: 2200 });
-  } catch (e) {
-    console.warn('AI grading failed, using local:', e);
-    if (e.message !== 'NO_KEY') { aiMode = 'error'; updateAiPill(); }
-    return null;
-  }
-}
-
-/* ---------- local grading (fallback) ---------- */
 function gradeLocal(question, answer) {
+  const lower = answer.toLowerCase();
   const marking = question.points.map(p => {
-    const found = p.k.some(k => answer.toLowerCase().includes(k.toLowerCase()));
+    const found = p.k.some(k => lower.includes(k.toLowerCase()));
     let quote = '';
     if (found) {
       for (const k of p.k) {
-        const idx = answer.toLowerCase().indexOf(k.toLowerCase());
+        const idx = lower.indexOf(k.toLowerCase());
         if (idx >= 0) {
           const start = Math.max(0, idx - 12);
           const end = Math.min(answer.length, idx + k.length + 12);
@@ -1881,7 +1706,7 @@ function gradeLocal(question, answer) {
       point_zh: p.tZh || '',
       hit: found,
       quote,
-      reason: found ? 'Keyword match (local check)' : 'No matching keyword found (local check)',
+      reason: found ? 'Keyword matched — concept present.' : 'No matching keyword — concept missing.',
       improve: found ? 'Mastered' : `Suggested: state "${p.t}"`
     };
   });
@@ -1894,101 +1719,60 @@ function gradeLocal(question, answer) {
 }
 
 /* =========================================================
-   AI flow
+   flow
    ========================================================= */
 function goStep(n) {
   document.querySelectorAll('.ai-step').forEach(s => {
     s.classList.toggle('on', +s.dataset.step === n);
   });
   document.querySelector('.ai-body').scrollTop = 0;
-  if (n === 1) renderHistoryNote();
-}
-
-function setLoading(btn, text) {
-  btn.disabled = true;
-  btn.dataset.orig = btn.textContent;
-  btn.innerHTML = `${text} <span class="loading-dots"><i></i><i></i><i></i></span>`;
-}
-function clearLoading(btn) {
-  btn.disabled = false;
-  btn.textContent = btn.dataset.orig || 'Submit';
-}
-
-document.getElementById('startQuiz').addEventListener('click', async () => {
-  const btn = document.getElementById('startQuiz');
-  let q = null;
-
-  if (aiMode === 'live') {
-    setLoading(btn, 'Generating');
-    q = await pickAIQuestion();
-    clearLoading(btn);
+  if (n === 1) {
+    renderHistoryNote();
+    updateDiffBadge();
   }
+}
 
-  if (!q) {
-    const local = pickLocalQuestion();
-    q = {
-      topic: local.topic,
-      topicZh: local.topicZh,
-      years: local.years,
-      types: local.types,
-      q: local.q,
-      qZh: local.qZh,
-      points: local.points.map(p => ({ t: p.t, tZh: p.tZh, k: p.k })),
-      analysis: local.analysis
-    };
-  } else {
-    const pointsEn = q.points || [];
-    const pointsZh = q.points_zh || [];
-    q = {
-      topic: q.topic || aiSel.topic,
-      topicZh: '',
-      years: [q.year || 'AI'],
-      types: [q.type || aiSel.type],
-      q: q.question || '',
-      qZh: q.question_zh || '',
-      points: pointsEn.map((p, i) => ({ t: typeof p === 'string' ? p : p.t, tZh: pointsZh[i] || '', k: [] })),
-      analysis: q.analysis || ''
-    };
-  }
+document.getElementById('startQuiz').addEventListener('click', () => {
+  const difficulty = getNextDifficulty();
+  const q = pickLocalQuestion(difficulty);
 
-  if (!q.points.length) q.points = [{ t: '(No marking points)', tZh: '', k: [] }];
+  currentQ = {
+    topic: q.topic,
+    topicZh: q.topicZh,
+    years: q.years,
+    types: q.types,
+    level: q.level,
+    q: q.q,
+    qZh: q.qZh,
+    points: q.points.map(p => ({ t: p.t, tZh: p.tZh, k: p.k })),
+    analysis: q.analysis
+  };
 
-  currentQ = q;
-  document.getElementById('qMeta').textContent =
-    `${q.topic}${q.topicZh ? ' · ' + q.topicZh : ''} · ${q.years[0]} · ${q.types[0]}`;
+  const levelLabel = { easy: 'Easy', medium: 'Medium', hard: 'Hard' }[q.level] || 'Medium';
+  const levelZh = { easy: '易', medium: '中', hard: '難' }[q.level] || '中';
+  document.getElementById('qMeta').innerHTML =
+    `<span>${q.topic}${q.topicZh ? ' · ' + q.topicZh : ''}</span>` +
+    `<span class="dot-sep">·</span>` +
+    `<span>${q.years[0]}</span>` +
+    `<span class="dot-sep">·</span>` +
+    `<span>${q.types[0]}</span>` +
+    `<span class="dot-sep">·</span>` +
+    `<span class="diff-badge ${q.level}">${levelLabel} · ${levelZh}</span>`;
+
   document.getElementById('qText').innerHTML =
     escapeHtml(q.q) + (q.qZh ? `<span class="zh">${escapeHtml(q.qZh)}</span>` : '');
   document.getElementById('answerBox').value = '';
   goStep(2);
 });
 
-document.getElementById('submitAns').addEventListener('click', async () => {
+document.getElementById('submitAns').addEventListener('click', () => {
   const ans = document.getElementById('answerBox').value.trim();
   if (!currentQ) return;
 
-  const btn = document.getElementById('submitAns');
-  let result = null;
+  const result = gradeLocal(currentQ, ans);
 
-  if (aiMode === 'live') {
-    setLoading(btn, 'Marking');
-    result = await gradeWithAI(currentQ, ans);
-    clearLoading(btn);
-  }
-
-  if (!result) result = gradeLocal(currentQ, ans);
-
-  if (!Array.isArray(result.marking)) {
-    result.marking = (result.hits || []).map(h => ({
-      point: h.point || h.t || '',
-      hit: !!h.hit,
-      quote: '',
-      reason: h.reason || '',
-      improve: h.hit ? 'Mastered' : 'Needs work'
-    }));
-  }
-
-  const total = result.marking.length || currentQ.points.length;
-  const score = result.marking.filter(m => m.hit).length;
+  const total = result.total;
+  const score = result.score;
   const pct = total > 0 ? Math.round(score / total * 100) : 0;
 
   const ring = document.getElementById('scoreRing');
@@ -2000,7 +1784,7 @@ document.getElementById('submitAns').addEventListener('click', async () => {
   const gradeTitleZh = pct >= 75 ? '掌握得不錯' : pct >= 45 ? '基本框架已建立' : '需要補強得分點';
   document.getElementById('scoreTitle').textContent = gradeTitle;
   document.getElementById('scoreSub').innerHTML =
-    `${score} / ${total} points hit${ans.length < 20 ? ' · answer too short' : ''}${aiMode === 'live' ? ' · AI-marked' : ' · Local check'}<span class="zh">命中 ${score} / ${total} 點 · ${gradeTitleZh}</span>`;
+    `${score} / ${total} points hit${ans.length < 20 ? ' · answer too short' : ''}<span class="zh">命中 ${score} / ${total} 點 · ${gradeTitleZh}</span>`;
 
   document.getElementById('rptMarking').innerHTML = result.marking.map(m => {
     const cls = m.hit ? 'ok' : 'no';
@@ -2010,16 +1794,15 @@ document.getElementById('submitAns').addEventListener('click', async () => {
       : `<span class="value empty">(no matching text found)</span>`;
     const improveHtml = m.improve && m.improve !== 'Mastered'
       ? `<div class="marking-row improve">
-           <span class="label">How to improve<span class="zh">改進方向</span></span>
-           <span class="value">${escapeHtml(m.improve)}</span>
+           <span class="label" style="color:var(--gov)">How to improve<span class="zh">改進方向</span></span>
+           <span class="value" style="color:var(--gov)">${escapeHtml(m.improve)}</span>
          </div>`
       : '';
-    const pointZh = m.point_zh || (currentQ.points.find(p => p.t === m.point)?.tZh || '');
     return `
       <div class="marking-card ${cls}">
         <div class="marking-head">
           <span class="mark">${mark}</span>
-          <span>${escapeHtml(m.point)}${pointZh ? `<span class="zh">${escapeHtml(pointZh)}</span>` : ''}</span>
+          <span>${escapeHtml(m.point)}${m.point_zh ? `<span class="zh">${escapeHtml(m.point_zh)}</span>` : ''}</span>
         </div>
         <div class="marking-body">
           <div class="marking-row">
@@ -2028,7 +1811,7 @@ document.getElementById('submitAns').addEventListener('click', async () => {
           </div>
           <div class="marking-row">
             <span class="label">Reason<span class="zh">評分理由</span></span>
-            <span class="value">${escapeHtml(m.reason || '—')}</span>
+            <span class="value">${escapeHtml(m.reason)}</span>
           </div>
           ${improveHtml}
         </div>
@@ -2037,11 +1820,12 @@ document.getElementById('submitAns').addEventListener('click', async () => {
   }).join('');
 
   document.getElementById('rptAnalysis').innerHTML =
-    `<div style="font-size:13.5px;line-height:1.8;color:#4A4A45">${escapeHtml(result.analysis || currentQ.analysis || '')}</div>`;
+    `<div style="font-size:13.5px;line-height:1.8;color:#4A4A45">${escapeHtml(result.analysis || '')}</div>`;
 
   pushHistory({
     topic: currentQ.topic,
     year: currentQ.years[0],
+    level: currentQ.level,
     score,
     total
   });
@@ -2060,8 +1844,8 @@ document.getElementById('againBtn').addEventListener('click', () => goStep(1));
 document.getElementById('aiBtn').addEventListener('click', () => {
   document.getElementById('aiOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
-  updateAiPill();
   renderHistoryNote();
+  updateDiffBadge();
 });
 document.getElementById('aiClose').addEventListener('click', () => {
   document.getElementById('aiOverlay').classList.remove('open');
@@ -2077,8 +1861,8 @@ buildChips('topicChips', AI_TOPICS, 'topic');
 buildChips('yearChips', AI_YEARS, 'year');
 buildChips('typeChips', AI_TYPES, 'type');
 syncSliders();
-updateAiPill();
 renderHistoryNote();
+updateDiffBadge();
 render();
 </script>
 </body>
